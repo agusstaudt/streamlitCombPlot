@@ -9,14 +9,13 @@ import plotly.express as px
 @st.cache_data(ttl=3600)
 def obtener_datos():
     cnx = pymysql.connect(
-        host='45.228.176.80',
-        user='dev',
-        password='rtk099%!ZmY&101',
-        port=43306,
-        database='datos_combustibles'
+        host=st.secrets["MYSQL_HOST"],
+        user=st.secrets["MYSQL_USER"],
+        password=st.secrets["MYSQL_PASSWORD"],
+        port=int(st.secrets["MYSQL_PORT"]),
+        database=st.secrets["MYSQL_DATABASE"]
     )
-    query = "SELECT * FROM base_misiones"
-    df = pd.read_sql(query, cnx)
+    df = pd.read_sql("SELECT * FROM base_misiones", cnx)
     cnx.close()
     return df
 
