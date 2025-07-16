@@ -6,6 +6,7 @@ import plotly.express as px
 # ------------------------
 # Configuración de conexión
 # ------------------------
+@st.cache_data(ttl=3600)
 def obtener_datos():
     cnx = pymysql.connect(
         host='45.228.176.80',
@@ -56,6 +57,8 @@ st.set_page_config(page_title="Dashboard de Volumen", layout="wide")
 st.title("📊 Dashboard de Volumen informado (m3)")
 
 # Cargar datos
+if st.button("🔄 Actualizar datos desde la base"):
+    obtener_datos.clear()
 df = obtener_datos()
 
 # Preprocesamiento
